@@ -3,18 +3,148 @@
 {% block title %}Add Product{% endblock title %}
 
 {% block content %}
+    <div class="columns is-centered">
+        <div class="column is-6">
+            <div class="box product-form-box">
+                <div class="form-header has-text-centered mb-6">
+                    <span class="icon is-large mb-4">
+                        <i class="fas fa-plus-circle fa-3x has-text-primary"></i>
+                    </span>
+                    <h1 class="title is-3">Add New Product</h1>
+                    <p class="subtitle is-6 has-text-grey">Fill in the details to add your product to the marketplace</p>
+                </div>
 
-    <h1 class="title">Add Product</h1>
+                <form method="post" action="" enctype="multipart/form-data" class="product-form">
+                    {% csrf_token %}
 
-    <form method="post" action="" enctype="multipart/form-data">
-        {% csrf_token %}
+                    <div class="field">
+                        <label class="label">
+                            <span class="icon-text">
+                                <span class="icon">
+                                    <i class="fas fa-tags"></i>
+                                </span>
+                                <span>Category</span>
+                            </span>
+                        </label>
+                        <div class="control">
+                            <div class="select is-fullwidth">
+                                {{ form.category }}
+                            </div>
+                        </div>
+                    </div>
 
-        {{ form.as_p }}
+                    <div class="field">
+                        <label class="label">
+                            <span class="icon-text">
+                                <span class="icon">
+                                    <i class="fas fa-image"></i>
+                                </span>
+                                <span>Product Image</span>
+                            </span>
+                        </label>
+                        <div class="control">
+                            <div class="file has-name is-fullwidth is-boxed">
+                                <label class="file-label">
+                                    {{ form.image }}
+                                    <span class="file-cta">
+                                        <span class="file-icon">
+                                            <i class="fas fa-cloud-upload-alt"></i>
+                                        </span>
+                                        <span class="file-label">
+                                            Choose an image…
+                                        </span>
+                                    </span>
+                                    <span class="file-name">
+                                        No file selected
+                                    </span>
+                                </label>
+                            </div>
+                            <p class="help">Recommended size: 800x600 pixels</p>
+                        </div>
+                    </div>
 
-        <div class="field">
-            <div class="control">
-                <button class="button is-dark is-uppercase">Add Product</button>
+                    <div class="field">
+                        <label class="label">
+                            <span class="icon-text">
+                                <span class="icon">
+                                    <i class="fas fa-heading"></i>
+                                </span>
+                                <span>Product Title</span>
+                            </span>
+                        </label>
+                        <div class="control has-icons-left">
+                            {{ form.title }}
+                            <span class="icon is-small is-left">
+                                <i class="fas fa-tag"></i>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">
+                            <span class="icon-text">
+                                <span class="icon">
+                                    <i class="fas fa-align-left"></i>
+                                </span>
+                                <span>Description</span>
+                            </span>
+                        </label>
+                        <div class="control">
+                            {{ form.description }}
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">
+                            <span class="icon-text">
+                                <span class="icon">
+                                    <i class="fas fa-rupee-sign"></i>
+                                </span>
+                                <span>Price</span>
+                            </span>
+                        </label>
+                        <div class="control has-icons-left">
+                            {{ form.price }}
+                            <span class="icon is-small is-left">
+                                <i class="fas fa-rupee-sign"></i>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="field mt-6">
+                        <div class="control">
+                            <button class="button is-primary is-fullwidth is-uppercase is-medium">
+                                <span class="icon">
+                                    <i class="fas fa-plus"></i>
+                                </span>
+                                <span>Add Product</span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
-    </form>
+    </div>
+
+    <script>
+        // File input name display
+        const fileInput = document.querySelector('#id_image');
+        const fileName = document.querySelector('.file-name');
+        
+        fileInput.onchange = () => {
+            if (fileInput.files.length > 0) {
+                fileName.textContent = fileInput.files[0].name;
+            }
+        };
+
+        // Add focus effects to inputs
+        document.querySelectorAll('.input, .textarea, .select select').forEach(input => {
+            input.addEventListener('focus', () => {
+                input.parentElement.classList.add('is-focused');
+            });
+            input.addEventListener('blur', () => {
+                input.parentElement.classList.remove('is-focused');
+            });
+        });
+    </script>
 {% endblock content %}
